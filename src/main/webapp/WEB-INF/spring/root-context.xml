@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/Gahan?autoReconnect=true&amp;useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.CharSet">utf8</prop>
+				<prop key="hibernate.connection.CharacterEncoding">utf8</prop>
+				<prop key="hibernate.connection.useUnicode">true</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>www.retail.gahan.beans.Admin</value>
+				<value>www.retail.gahan.beans.Product</value>
+				<value>www.retail.gahan.beans.InventoryProduct</value>
+				<value>www.retail.gahan.beans.SalesOrder</value>
+				<value>www.retail.gahan.beans.SalesPayment</value>
+				<value>www.retail.gahan.beans.SalesProduct</value>
+				<value>www.retail.gahan.beans.Customer</value>
+				<value>www.retail.gahan.beans.Gahan</value>
+				<value>www.retail.gahan.beans.GahanProduct</value>
+				<value>www.retail.gahan.beans.GahanPayment</value>
+				<value>www.retail.gahan.beans.PurchaseOrder</value>
+				<value>www.retail.gahan.beans.PurchasePayment</value>
+				<value>www.retail.gahan.beans.PurchaseProduct</value>
+				<value>www.retail.gahan.beans.Supplier</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="adminDao" class="www.retail.gahan.daos.AdminDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="adminService" class="www.retail.gahan.services.AdminServiceImpl">
+		<property name="adminDaoI" ref="adminDao"></property>
+	</bean>
+	
+	<bean id="viewAddProductsDao" class="www.retail.gahan.daos.ViewAddProductsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="viewAddProductsService" class="www.retail.gahan.services.ViewAddProductsServiceImpl">
+		<property name="viewAddProductsDaoI" ref="viewAddProductsDao"></property>
+	</bean>
+	
+	<bean id="gahanDao" class="www.retail.gahan.daos.GahanDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="gahanService" class="www.retail.gahan.services.GahanServiceImpl">
+		<property name="gahanDaoI" ref="gahanDao"></property>
+	</bean>
+	
+	<bean id="inventoryProductDao" class="www.retail.gahan.daos.InventoryProductDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="inventoryProductService" class="www.retail.gahan.services.InventoryProductServiceImpl">
+		<property name="inventoryProductDaoI" ref="inventoryProductDao"></property>
+	</bean>
+	
+	<bean id="salesProductDao" class="www.retail.gahan.daos.SalesProductDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="SalesProductService" class="www.retail.gahan.services.SalesProductServiceImpl">
+		<property name="salesProductDaoI" ref="salesProductDao"></property>
+	</bean>
+	
+	<bean id="salesOrderDao" class="www.retail.gahan.daos.SalesOrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="salesOrderService" class="www.retail.gahan.services.SalesOrderServiceImpl">
+		<property name="salesOrderDaoI" ref="salesOrderDao"></property>
+	</bean>
+	
+	<bean id="salesPaymentDao" class="www.retail.gahan.daos.SalesPaymentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="salesPaymentService" class="www.retail.gahan.services.SalesPaymentServiceImpl">
+		<property name="salesPaymentDaoI" ref="salesPaymentDao"></property>
+	</bean>
+	
+	<bean id="customerDao" class="www.retail.gahan.daos.CustomerDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="customerService" class="www.retail.gahan.services.CustomerServiceImpl">
+		<property name="customerDaoI" ref="customerDao"></property>
+	</bean>
+	
+	<bean id="salesReportDao" class="www.retail.gahan.daos.SalesReportDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="salesReportService" class="www.retail.gahan.services.SalesReportServiceImpl">
+		<property name="salesReportDaoI" ref="salesReportDao"></property>
+	</bean>
+	
+	<bean id="purchaseProductDao" class="www.retail.gahan.daos.PurchaseProductDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="purchaseProductService" class="www.retail.gahan.services.PurchaseProductServiceImpl">
+		<property name="purchaseProductDaoI" ref="purchaseProductDao"></property>
+	</bean>
+	
+	<bean id="purchaseOrderDao" class="www.retail.gahan.daos.PurchaseOrderDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="purchaseOrderService" class="www.retail.gahan.services.PurchaseOrderServiceImpl">
+		<property name="purchaseOrderDaoI" ref="purchaseOrderDao"></property>
+	</bean>
+	
+	<bean id="purchasePaymentDao" class="www.retail.gahan.daos.PurchasePaymentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="purchasePaymentService" class="www.retail.gahan.services.PurchasePaymentServiceImpl">
+		<property name="purchasePaymentDaoI" ref="purchasePaymentDao"></property>
+	</bean>
+	
+	<bean id="supplierDao" class="www.retail.gahan.daos.SupplierDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="supplierService" class="www.retail.gahan.services.SupplierServiceImpl">
+		<property name="supplierDaoI" ref="supplierDao"></property>
+	</bean>
+</beans>
